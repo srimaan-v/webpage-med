@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppointmentForm from '../components/AppointmentForm';
+import { doctors } from '../data/doctors';
+
+const selectedDoctorId = Astro.url.searchParams.get('doctor') || undefined;
+---
+
+<Layout title="Book Appointment">
+  <div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold text-center mb-12">Book an Appointment</h1>
+    
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+      <AppointmentForm doctors={doctors} selectedDoctorId={selectedDoctorId} client:load />
+    </div>
+  </div>
+</Layout>

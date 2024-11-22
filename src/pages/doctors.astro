@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DoctorCard from '../components/DoctorCard';
+import { doctors } from '../data/doctors';
+
+const specialties = [...new Set(doctors.map(doctor => doctor.specialty))];
+---
+
+<Layout title="Our Doctors">
+  <div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold text-center mb-12">Our Medical Specialists</h1>
+    
+    <div class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Browse by Specialty</h2>
+      <div class="flex flex-wrap gap-4">
+        {specialties.map(specialty => (
+          <a
+            href={`#${specialty.toLowerCase()}`}
+            class="px-4 py-2 bg-gray-100 rounded-full hover:bg-primary hover:text-white transition-colors"
+          >
+            {specialty}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {specialties.map(specialty => (
+      <div id={specialty.toLowerCase()} class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6">{specialty}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {doctors
+            .filter(doctor => doctor.specialty === specialty)
+            .map(doctor => (
+              <DoctorCard doctor={doctor} client:load />
+            ))
+          }
+        </div>
+      </div>
+    ))}
+  </div>
+</Layout>
